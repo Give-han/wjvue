@@ -50,7 +50,12 @@ export default {
         useraccount: this.loginParam.useraccount,
         password: this.loginParam.password
       }).then(res => {
-        console.log(res)
+        if (res.data.status === 200) {
+          this.$store.commit('auth')
+          this.$router.push({ path: 'Home' })
+        } else {
+          this.$router.push({ path: 'Login' })
+        }
       }).catch(err => {
         console.log(err)
       })
