@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-  isAuth: false
+  isAuth: true
 }
 
 const mutations = {

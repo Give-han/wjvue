@@ -50,7 +50,7 @@ export default {
         useraccount: this.loginParam.useraccount,
         password: this.loginParam.password
       }).then(res => {
-        if (res.data.status === 200) {
+        if (res.data.code === 200) {
           this.$store.commit('auth')
           this.$router.push({ path: 'Home' })
         } else {
@@ -79,7 +79,7 @@ export default {
     background-clip: padding-box;
     background: #fff;
     width: 350px;
-    margin: 95px auto;
+    margin: 195px auto;
     padding: 35px 35px 15px 35px;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 30px #cac6c6;
