@@ -1,10 +1,27 @@
 <template>
   <div class="book-item">
-    <div class="cover">
-      <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title>
-        <img :src=book.imageUrl referrerPolicy="no-referrer"  alt=""/>
-      </a>
-    </div>
+    <el-popover trigger="hover"
+                width="300px"
+                id="popover"
+                :open-delay=200
+                placement="right">
+      <div class="cover" slot="reference">
+        <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title>
+          <img :src=book.imageUrl referrerPolicy="no-referrer"  alt=""/>
+        </a>
+      </div>
+      <div class="book-bubble">
+        <div class="content">
+          <h4 class="title">{{book.title}}</h4>
+          <p>
+            <span class="author">{{book.author}}/</span>
+            <span class="year">{{book.year}}/</span>
+            <span class="publisher">{{book.publisher}}</span>
+          </p>
+          <p class="abstract">{{book.abs}}</p>
+        </div>
+      </div>
+    </el-popover>
     <div class="info">
       <div class="title">
         <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title>
@@ -15,40 +32,53 @@
         {{book.author}}
       </div>
       <div class="more-meta">
-        <h4 class="title">铸剑</h4>
+        <h4 class="title">{{book.title}}</h4>
         <p>
           <span class="author">
-            原著：鲁迅&nbsp;/&nbsp;编绘：昔酒
+            {{book.author}}
           </span>
           <span class="year">
-            2021-7
+            {{book.year}}
           </span>
           <span class="publisher">
-            一頁folio | 广西师范大学出版社
+            {{book.publisher}}
           </span>
         </p>
         <p class="abstract">
-          【编辑推荐】
-          ★冰冷的剑、落下的头，在猛火与滚水中，新的人性诞生了
-          ——人要复仇，唯一的出路是向自身复仇。
-          “青春和热血浓缩为砍下的头颅，无比轻灵而又勇敢无畏，向那幽冥的深处前行了。”
-          ★文学经典的视觉演绎， 诗与魔幻的纸上剧场，人性与艺术的反抗狂死曲
-          先锋绘本作家、 图画造梦师——昔酒打破文字与视觉的界限，重建全新绘本美学，以艳异笔触唤醒鲁迅故事...
+          {{book.abs}}
         </p>
       </div>
     </div>
+<!--    <book-bubble class="book-tip" :class="{active: isHover}" :book="book"></book-bubble>-->
   </div>
 </template>
 
 <script>
+
+// import BookBubble from './BookBubble'
+
 export default {
   name: 'IndexBookItem',
+  // components: { BookBubble },
+  data () {
+    return {
+      isHover: false
+    }
+  },
   props: {
     book: {
       type: Object,
       default () {
         return {}
       }
+    }
+  },
+  methods: {
+    enter () {
+      this.isHover = true
+    },
+    leave () {
+      this.isHover = false
     }
   }
 }
@@ -112,7 +142,15 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  /*.abstract {*/
-  /*  */
-  /*}*/
+  .book-bubble {
+    width: 300px;
+    /*background: #f9f9f7;*/
+  }
+  .abstract {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+  }
 </style>
