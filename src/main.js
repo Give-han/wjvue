@@ -15,7 +15,7 @@ Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
 
 // 配置axios的baseUrl
-axios.defaults.baseURL = '/wj'
+// axios.defaults.baseURL = '/wj'
 
 // 路由守卫
 router.beforeEach((to, from, next) => {

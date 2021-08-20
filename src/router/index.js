@@ -7,6 +7,8 @@ const Index = () => import('components/home/index/Index')
 const Jotter = () => import('components/home/jotter/Jotter')
 const Library = () => import('components/home/library/Library')
 const Profile = () => import('components/home/profile/Profile')
+const Detail = () => import('components/home/detail/Detail')
+const SearchView = () => import('components/home/index/child/SearchView')
 
 Vue.use(VueRouter)
 
@@ -52,6 +54,16 @@ const routes = [
           needLogin: true
         },
         component: Profile
+      },
+      {
+        path: '/bookDetail',
+        name: 'bookDetail',
+        component: Detail
+      },
+      {
+        path: '/searchView',
+        name: 'searchView',
+        component: SearchView
       }
     ]
   },

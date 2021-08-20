@@ -83,6 +83,9 @@ export default {
     float: right;
     margin-top: -21px;
   }
+  .slide-control a:link {
+    color: #3377AA;
+  }
   .slide-dots {
     display: inline-block;
     zoom: 1;

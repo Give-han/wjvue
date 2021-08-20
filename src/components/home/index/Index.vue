@@ -21,19 +21,26 @@
         <ebook :ebook="books"></ebook>
       </div>
       <div class="content-slide">
-        <h2>标签</h2>
+        <!--热门标签-->
+        <hot-tags :tag-child="tagChild"></hot-tags>
+        <!--畅销图书榜-->
+        <popular-book :popu-book="popularBooks"></popular-book>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SearchItem from './SearchItem'
+import SearchItem from './child/SearchItem'
 import Carousel from './carousel/Carousel'
 import IndexBook from './book/IndexBook'
 import BookNews from './child/BookNews'
 import BookRank from './bookrank/BookRank'
 import Ebook from './child/Ebook'
+import HotTags from './slide/HotTags'
+import PopularBook from './slide/PopularBook'
+
+import { getRecommendBook, getBookNews, getIndexTags, getPopularBook, searchBook } from '../../../network/home'
 
 export default {
   name: 'Index',
@@ -46,7 +53,8 @@ export default {
       title1: '新书速递',
       subTitle1: ['更多》'],
       title2: '图书资讯',
-      count: 4
+      count: 4,
+      tagChild: []
     }
   },
   components: {
@@ -55,26 +63,45 @@ export default {
     IndexBook,
     BookNews,
     BookRank,
-    Ebook
+    Ebook,
+    HotTags,
+    PopularBook
   },
   methods: {
     search (keyword) {
+      // 查询搜索结果
+      searchBook(keyword).then(res => {
+        if (res.code === 200) {
+          // 跳转搜索结果页面
+          this.$router.push({
+            name: 'searchView',
+            params: {
+              books: res.data
+            }
+          })
+        }
+      })
     }
   },
   created () {
-    this.axios.get('/book/recommendBook').then(res => {
-      if (res.data.code === 200) {
-        this.books = res.data.data
+    getRecommendBook().then(res => {
+      if (res.code === 200) {
+        this.books = res.data
       }
     })
-    this.axios.get('/book/bookNews').then(res => {
-      if (res.data.code === 200) {
-        this.bookNews = res.data.data
+    getBookNews().then(res => {
+      if (res.code === 200) {
+        this.bookNews = res.data
       }
     })
-    this.axios.post('/book/popularBook/10').then(res => {
-      if (res.data.code === 200) {
-        this.popularBooks = res.data.data
+    getPopularBook().then(res => {
+      if (res.code === 200) {
+        this.popularBooks = res.data
+      }
+    })
+    getIndexTags().then(res => {
+      if (res.code === 200) {
+        this.tagChild = res.data
       }
     })
   }
@@ -96,6 +123,7 @@ export default {
     width: 675px;
     float: left;
     padding-right: 40px;
+    margin-bottom: var(--bottom);
   }
   .content-slide {
     width: 300px;

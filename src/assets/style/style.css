@@ -1,0 +1,21 @@
+:root {
+    --bottom: 50px;
+    --text-color: #37a;
+}
+
+a:link {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+    visibility: hidden;
+}

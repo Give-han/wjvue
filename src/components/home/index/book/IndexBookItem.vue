@@ -6,7 +6,7 @@
                 :open-delay=200
                 placement="right">
       <div class="cover" slot="reference">
-        <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title>
+        <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title @click.prevent="clickBook(book.bookId)">
           <img :src=book.imageUrl referrerPolicy="no-referrer"  alt=""/>
         </a>
       </div>
@@ -24,7 +24,7 @@
     </el-popover>
     <div class="info">
       <div class="title">
-        <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title>
+        <a href="https://book.douban.com/subject/35479545/?icn=index-latestbook-subject" :title=book.title @click.prevent="clickBook(book.bookId)">
           {{book.title}}
         </a>
       </div>
@@ -79,6 +79,14 @@ export default {
     },
     leave () {
       this.isHover = false
+    },
+    clickBook (boodId) {
+      this.$router.push({
+        name: 'bookDetail',
+        params: {
+          bookId: boodId
+        }
+      })
     }
   }
 }
