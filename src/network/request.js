@@ -1,9 +1,13 @@
 import axios from 'axios'
+import store from '../store/index'
 
 export function request (config) {
   const instance = axios.create({
     baseURL: '/wj',
-    timeout: 5000
+    timeout: 5000,
+    headers: {
+      token: store.state.token
+    }
   })
 
   instance.interceptors.response.use(res => {
@@ -15,8 +19,8 @@ export function request (config) {
   return instance(config)
 }
 
-export function post (path, data, nojson = false) {
-  if (nojson) {
+export function post (path, data, json = true) {
+  if (json) {
     return request({
       url: path,
       method: 'post',

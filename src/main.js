@@ -16,11 +16,19 @@ Vue.use(ElementUI)
 
 // 配置axios的baseUrl
 // axios.defaults.baseURL = '/wj'
+// axios.interceptors.request.use(config => {
+//   console.log('222222222')
+//   const token = store.state.token
+//   config.headers.common.token = token
+//   return config
+// }, error => {
+//   return Promise.reject(error)
+// })
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.needLogin)) {
-    if (store.state.isAuth) {
+    if (store.state.token !== null && store.state.token !== '') {
       next()
     } else {
       next('/login')

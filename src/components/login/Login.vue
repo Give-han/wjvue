@@ -30,6 +30,9 @@
 </template>
 
 <script>
+
+import { login } from '../../network/login'
+
 export default {
   name: 'Login',
   data () {
@@ -46,12 +49,13 @@ export default {
   },
   methods: {
     login () {
-      this.axios.post('/login', {
-        useraccount: this.loginParam.useraccount,
-        password: this.loginParam.password
-      }).then(res => {
-        if (res.data.code === 200) {
-          this.$store.commit('auth')
+      login(this.loginParam.useraccount,
+        this.loginParam.password
+      ).then(data => {
+        console.log(data)
+        if (data.code === 200) {
+          var token = data.data.token
+          this.$store.commit('auth', token)
           this.$router.push({ path: 'Home' })
         } else {
           this.$router.push({ path: 'Login' })
